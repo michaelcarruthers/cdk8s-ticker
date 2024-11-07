@@ -1,0 +1,12 @@
+version: '3'
+
+tasks:
+  default:
+    desc: Transpile the CDK8s application to Kubernetes manifests
+    cmds:
+      - cdk8s synth
+
+  synth:
+    desc: Synthesize the CDK8s application to Kubernetes manifests
+    cmds:
+      - cdk8s synth
