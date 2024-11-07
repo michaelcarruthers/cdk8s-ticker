@@ -4,6 +4,9 @@ import (
 	"github.com/aws/constructs-go/constructs/v10"
 	"github.com/aws/jsii-runtime-go"
 	"github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2"
+
+	"example.com/ticker/imports/k8s"
+	"example.com/ticker/internal/values"
 )
 
 type MyChartProps struct {
@@ -16,9 +19,75 @@ func NewMyChart(scope constructs.Construct, id string, props *MyChartProps) cdk8
 		cprops = props.ChartProps
 	}
 	chart := cdk8s.NewChart(scope, jsii.String(id), &cprops)
+	val := values.Read()
 
-	// define resources here
+	matchLabels := &map[string]*string{
+		"app": jsii.String(val.Name),
+		"env": jsii.String(val.Env),
+	}
 
+	metadata := &k8s.ObjectMeta{
+		Name:      jsii.String(val.Name),
+		Namespace: jsii.String(val.Namespace),
+		Labels:    matchLabels,
+	}
+
+	k8s.NewKubeNamespace(chart, jsii.String("namespace"), &k8s.KubeNamespaceProps{
+		Metadata: metadata,
+	})
+
+	secretValues := make(map[string]*string)
+	for name, value := range val.EnvVars {
+		secretValues[name] = jsii.String(value)
+	}
+
+	k8s.NewKubeSecret(chart, jsii.String("env"), &k8s.KubeSecretProps{
+		Metadata:   metadata,
+		StringData: &secretValues,
+	})
+
+	k8s.NewKubeDeployment(chart, jsii.String("deployment"), &k8s.KubeDeploymentProps{
+		Metadata: metadata,
+
+		Spec: &k8s.DeploymentSpec{
+			Replicas: jsii.Number(val.Replicas),
+			Selector: &k8s.LabelSelector{
+				MatchLabels: matchLabels,
+			},
+
+			Template: &k8s.PodTemplateSpec{
+				Metadata: metadata,
+				Spec: &k8s.PodSpec{
+					Containers: &[]*k8s.Container{
+						{
+							Name:  jsii.String(val.Name),
+							Image: jsii.String(val.Image),
+							EnvFrom: &[]*k8s.EnvFromSource{
+								{
+									SecretRef: &k8s.SecretEnvSource{
+										Name: metadata.Name,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	})
+
+	k8s.NewKubeService(chart, jsii.String("service"), &k8s.KubeServiceProps{
+		Metadata: metadata,
+		Spec: &k8s.ServiceSpec{
+			Selector: matchLabels,
+			Ports: &[]*k8s.ServicePort{
+				{
+					Name: &val.Service.Name,
+					Port: &val.Service.Port,
+				},
+			},
+		},
+	})
 	return chart
 }
 
