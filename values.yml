@@ -1,0 +1,33 @@
+# Name of the environment where the application is deployed
+env: dev
+
+# Map of environment variable to respective value to provide to the application container
+env_vars:
+  # Alpha Vantage API key 
+  # TODO: Migrate the API key SOPS of cloud provider secret manager
+  APIKEY: REPLACE_ME
+
+  # Number of days to retrieve stock data
+  NDAYS: 3
+
+  # Stock symbol to retrieve data for
+  SYMBOL: MSFT
+
+# Name of the container image to deploy
+image: 'us-west1-docker.pkg.dev/cloudy-sunday/ticker/ticker:latest'
+
+# Name of the application
+name: ticker
+
+# Name of the Kubernetes namespace to deploy the application
+namespace: ticker
+
+service:
+  # Name of the Kubernetes service
+  name: ticker
+
+  # Port number of the service
+  port: 8080
+
+# Number of desired replicas of the application
+replicas: 1
