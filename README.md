@@ -8,6 +8,7 @@ cdk8s-ticker is a cdk8s application for managing the Kubernetes deployment of
 * [cdk8s](https://cdk8s.io/)
 * [go](https://go.dev/)
 * [Taskfile](https://taskfile.dev/) (optional)
+* [Visual Studio Code](https://code.visualstudio.com/) or [devcontainers](https://github.com/devcontainers/cli)
 
 ## Configuration
 
