@@ -4,9 +4,17 @@ tasks:
   default:
     desc: Transpile the CDK8s application to Kubernetes manifests
     cmds:
-      - cdk8s synth
+      - deploy
 
   synth:
     desc: Synthesize the CDK8s application to Kubernetes manifests
     cmds:
       - cdk8s synth
+
+  deploy:
+    desc: Deploy the synthenized Kubernetes manifest(s)
+    prompt: Are you sure you want to deploy?
+    deps:
+      - synth
+    cmds:
+      - kubectl apply -f dist
