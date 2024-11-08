@@ -5,10 +5,9 @@ cdk8s-ticker is a cdk8s application for managing the Kubernetes deployment of
 
 ## Prerequisites
 
-* [cdk8s](https://cdk8s.io/)
-* [go](https://go.dev/)
+* [Docker](https://www.docker.com/) (or [Podman](https://podman.io/))
 * [Taskfile](https://taskfile.dev/) (optional)
-* [Visual Studio Code](https://code.visualstudio.com/) or [devcontainers](https://github.com/devcontainers/cli)
+* [Visual Studio Code](https://code.visualstudio.com/) (or [devcontainers](https://github.com/devcontainers/cli))
 
 ## Configuration
 
@@ -35,7 +34,7 @@ a Kubernetes manifest (YAML) file. This is accomplished using the `cdk8s`
 command-line utility:
 
 ```bash
-$ cdktf synth
+$ task synth
 ```
 
 ## Deploy
@@ -44,7 +43,7 @@ Once the CDK8s application has been successfully synthensized, the Kubernetes
 manifest can be applied using the typical `kubectl` process:
 
 ```bash
-$ kubectl apply -f dist/ticker.k8s.yaml
+$ task deploy
 ```
 
 ## tl;dr
@@ -52,5 +51,5 @@ $ kubectl apply -f dist/ticker.k8s.yaml
 Using `task` run:
 
 ```bash
-task
+$ task
 ```
