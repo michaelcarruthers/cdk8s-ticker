@@ -15,18 +15,18 @@ name: ticker
 # Name of the Kubernetes namespace to deploy the application
 namespace: ticker
 
+# Number of days to retrieve stock time series data
+number_of_days: 3
+
+# Number of desired replicas of the application
+replicas: 1
+
 service:
   # Name of the Kubernetes service
   name: ticker
 
   # Port number of the service
   port: 8080
-
-# Number of desired replicas of the application
-replicas: 1
-
-# Number of days to retrieve stock time series data
-number_of_days: 3
 
 # Symbol of the stock to operate on
 symbol: MSFT
