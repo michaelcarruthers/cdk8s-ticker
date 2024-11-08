@@ -36,14 +36,20 @@ func NewMyChart(scope constructs.Construct, id string, props *MyChartProps) cdk8
 		Metadata: metadata,
 	})
 
-	secretValues := make(map[string]*string)
-	for name, value := range val.EnvVars {
-		secretValues[name] = jsii.String(value)
+	envNameToValue := map[string]*string{
+		"APIKEY": &val.ApiKey,
+		"NDAYS":  &val.NumOfDays,
+		"SYMBOL": &val.Symbol,
+	}
+
+	envValues := make(map[string]*string)
+	for envKey, envVal := range envNameToValue {
+		envValues[envKey] = envVal
 	}
 
 	k8s.NewKubeSecret(chart, jsii.String("env"), &k8s.KubeSecretProps{
 		Metadata:   metadata,
-		StringData: &secretValues,
+		StringData: &envValues,
 	})
 
 	k8s.NewKubeDeployment(chart, jsii.String("deployment"), &k8s.KubeDeploymentProps{

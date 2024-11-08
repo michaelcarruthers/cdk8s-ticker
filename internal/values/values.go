@@ -9,12 +9,14 @@ import (
 )
 
 type ValuesConfig struct {
-	Env       string            `yaml:"env"`
-	EnvVars   map[string]string `yaml:"env_vars"`
-	Name      string            `yaml:"name"`
-	Namespace string            `yaml:"namespace"`
-	Image     string            `yaml:"image"`
-	Replicas  int64             `yaml:"replicas,omitempty"`
+	ApiKey    string `yaml:"api_key"`
+	Env       string `yaml:"environment"`
+	Name      string `yaml:"name"`
+	Namespace string `yaml:"namespace"`
+	NumOfDays string `yaml:"number_of_days"`
+	Image     string `yaml:"image"`
+	Replicas  int64  `yaml:"replicas,omitempty"`
+	Symbol    string `yaml:"symbol"`
 
 	Service struct {
 		Name string  `yaml:"name"`
