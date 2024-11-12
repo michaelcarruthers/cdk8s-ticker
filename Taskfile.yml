@@ -8,9 +8,10 @@ tasks:
 
   synth:
     desc: Synthesize the CDK8s application to Kubernetes manifests
+    silent: true
     cmds:
-      - devcontainer up
-      - devcontainer exec cdk8s synth
+      - devcontainer up &> /dev/null
+      - devcontainer exec cdk8s synth &> /dev/null
 
   deploy:
     desc: Deploy the synthesized Kubernetes manifest(s)
