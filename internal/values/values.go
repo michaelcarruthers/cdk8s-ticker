@@ -18,6 +18,18 @@ type ValuesConfig struct {
 	Replicas  int64  `yaml:"replicas,omitempty"`
 	Symbol    string `yaml:"symbol"`
 
+	Resources struct {
+		Limits struct {
+			CPU    string `yaml:"cpu"`
+			Memory string `yaml:"memory"`
+		} `yaml:"limits,omitempty"`
+
+		Requests struct {
+			CPU    string `yaml:"cpu"`
+			Memory string `yaml:"memory"`
+		} `yaml:"requests"`
+	} `yaml:"resources,omitempty"`
+
 	Service struct {
 		Name string  `yaml:"name"`
 		Port float64 `yaml:"port"`

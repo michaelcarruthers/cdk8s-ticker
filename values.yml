@@ -9,6 +9,12 @@ environment: dev
 # Name of the container image to deploy
 image: 'us-west1-docker.pkg.dev/cloudy-sunday/ticker/ticker:latest'
 
+# Kubernetes resource limits and requests
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+
 # Name of the application
 name: ticker
 

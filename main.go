@@ -75,6 +75,12 @@ func NewMyChart(scope constructs.Construct, id string, props *MyChartProps) cdk8
 									},
 								},
 							},
+							Resources: &k8s.ResourceRequirements{
+								Requests: &map[string]k8s.Quantity{
+									"cpu":    k8s.Quantity_FromString(&val.Resources.Requests.CPU),
+									"memory": k8s.Quantity_FromString(&val.Resources.Requests.Memory),
+								},
+							},
 						},
 					},
 				},
